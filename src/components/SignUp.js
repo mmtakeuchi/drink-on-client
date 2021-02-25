@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { createUser } from "../actions/userActions";
 
 class SignUp extends Component {
   state = {
@@ -12,10 +14,21 @@ class SignUp extends Component {
       [e.target.name]: e.target.value,
     });
   };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.createUser(this.state);
+    this.setState({
+      email: "",
+      username: "",
+      password: "",
+    });
+  };
+
   render() {
     return (
-      <>
-        <form className="signForm">
+      <div>
+        <form className="signForm" onSubmit={this.handleSubmit}>
           <label htmlFor="email">Email:</label>
           <input
             type="text"
@@ -37,11 +50,15 @@ class SignUp extends Component {
             value={this.state.password}
             onChange={this.handleInputChange}
           ></input>
-          <button type="submit">Log In</button>
+          <button type="submit">Sign Up</button>
         </form>
-      </>
+      </div>
     );
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => ({
+  createUser: (userInfo) => dispatch(createUser(userInfo)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

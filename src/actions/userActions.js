@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://localhost:3001";
 
 const validateUser = (userObj) => {
   return {
@@ -9,13 +9,13 @@ const validateUser = (userObj) => {
 
 export function createUser(userInfo) {
   return (dispatch) => {
-    dispatch({ type: "SIGN_UP_USER" });
-    fetch(`${BASE_URL}/sign_up`, {
+    fetch(`${BASE_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      withCreditials: true,
       body: JSON.stringify(userInfo),
     })
       .then((resp) => resp.json())
@@ -30,20 +30,58 @@ export function createUser(userInfo) {
 
 export function loginUser(userInfo) {
   return (dispatch) => {
-    dispatch({ type: "AUTH_USER" });
-    fetch(`${BASE_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(userInfo),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data);
-        localStorage.setItem("token", data.jwt);
-        dispatch(validateUser(data.user));
-      });
+    const token = localStorage.token;
+    if (token) {
+      return fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(userInfo),
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem("token", data.jwt);
+          dispatch(validateUser(data.user));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+}
+
+export function autoLoginUser() {
+  return (dispatch) => {
+    const token = localStorage.token;
+    if (token) {
+      return fetch(`${BASE_URL}/auto_login`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          if (data.error) {
+            alert(data.error);
+            localStorage.removeItem("token");
+          } else {
+            dispatch(loginUser(data));
+          }
+        });
+    }
+  };
+}
+
+export function logout(userInfo) {
+  return (dispatch) => {
+    localStorage.removeItem("token");
+    return dispatch({ type: "LOGOUT", payload: userInfo });
   };
 }

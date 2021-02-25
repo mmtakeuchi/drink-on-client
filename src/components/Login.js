@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { loginUser } from "../actions/userActions";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   state = {
@@ -11,10 +14,20 @@ class Login extends Component {
       [e.target.name]: e.target.value,
     });
   };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.loginUser(this.state);
+    this.setState({
+      username: "",
+      password: "",
+    });
+  };
   render() {
+    console.log(this);
     return (
-      <>
-        <form className="signForm">
+      <div>
+        <form className="signForm" onSubmit={this.handleSubmit}>
           <label htmlFor="username">Username:</label>
           <input
             type="text"
@@ -31,9 +44,14 @@ class Login extends Component {
           ></input>
           <button type="submit">Log In</button>
         </form>
-      </>
+        <Link to="/">HOME</Link>
+      </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  loginUser: (userInfo) => dispatch(loginUser(userInfo)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

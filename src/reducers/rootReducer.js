@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import cocktailsReducer from "./cocktailsReducer";
 import commentsReducer from "./commentsReducer";
-import usersReducer from "./userReducer";
+import userReducer from "./userReducer";
 
 const rootReducer = combineReducers({
   cocktails: cocktailsReducer,
   comments: commentsReducer,
-  users: usersReducer,
+  user: userReducer,
 });
 
 export default rootReducer;

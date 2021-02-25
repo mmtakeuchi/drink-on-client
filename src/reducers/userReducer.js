@@ -1,8 +1,16 @@
-const usersReducer = (state = { users: [] }, action) => {
+const usersReducer = (state = { user: {}, loggedIn: false }, action) => {
   switch (action.type) {
-    case "GET_USERS":
+    case "LOGIN_USER":
       return {
-        users: [...state.users],
+        ...state,
+        user: action.payload,
+        loggedIn: true,
+      };
+    case "LOGOUT_USER":
+      return {
+        ...state,
+        user: {},
+        loggedIn: false,
       };
     default:
       return state;
