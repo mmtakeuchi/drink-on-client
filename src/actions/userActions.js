@@ -79,9 +79,9 @@ export function autoLoginUser() {
   };
 }
 
-export function logout(userInfo) {
+export function logoutUser(userInfo) {
   return (dispatch) => {
     localStorage.removeItem("token");
-    return dispatch({ type: "LOGOUT", payload: userInfo });
+    return dispatch({ type: "LOGOUT_USER", payload: userInfo });
   };
 }
