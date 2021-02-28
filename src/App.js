@@ -26,11 +26,12 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route path="/signup" render={(props) => <SignUp {...props} />} />
               <Route path="/login" render={(props) => <Login {...props} />} />
-              <Route path="/cocktails" component={CocktailsContainer} />
-              <Route
+              {/* <Route path="/cocktails" component={CocktailsContainer} /> */}
+              {/* <Route
                 path="/cocktails"
                 render={(props) => <CocktailsContainer {...props} />}
-              />
+              /> */}
+              <CocktailsContainer />
             </Switch>
           </div>
         </Container>

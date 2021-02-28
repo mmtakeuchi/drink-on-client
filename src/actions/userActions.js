@@ -7,7 +7,7 @@ const validateUser = (userObj) => {
   };
 };
 
-export function createUser(userInfo) {
+export const createUser = (userInfo) => {
   return (dispatch) => {
     fetch(`${BASE_URL}/signup`, {
       method: "POST",
@@ -26,9 +26,9 @@ export function createUser(userInfo) {
       })
       .catch((err) => console.log(err));
   };
-}
+};
 
-export function loginUser(userInfo) {
+export const loginUser = (userInfo) => {
   return (dispatch) => {
     const token = localStorage.token;
     if (token) {
@@ -52,9 +52,9 @@ export function loginUser(userInfo) {
         });
     }
   };
-}
+};
 
-export function autoLoginUser() {
+export const autoLoginUser = () => {
   return (dispatch) => {
     const token = localStorage.token;
     if (token) {
@@ -77,11 +77,11 @@ export function autoLoginUser() {
         });
     }
   };
-}
+};
 
-export function logoutUser(userInfo) {
+export const logoutUser = (userInfo) => {
   return (dispatch) => {
     localStorage.removeItem("token");
     return dispatch({ type: "LOGOUT_USER", payload: userInfo });
   };
-}
+};

@@ -1,12 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Switch, Route } from "react-router-dom";
+import { fetchCocktails } from "../actions/cocktailActions";
+import Cocktails from "../components/Cocktails";
+import NewCocktail from "../components/NewCocktail";
 
-const CocktailsContainer = (props) => {
-  console.log(props);
-  return (
-    <div>
-      <h1>Cocktails</h1>
-    </div>
-  );
-};
+export class CocktailsContainer extends Component {
+  render() {
+    console.log(this);
+    return (
+      <div>
+        <Switch>
+          <Route exact path="/cocktails" component={Cocktails} />
+          <Route path="/cocktails/new" component={NewCocktail} />
+        </Switch>
+      </div>
+    );
+  }
+}
 
-export default CocktailsContainer;
+const mapStateToProps = (state) => ({
+  cocktails: state.cocktails.cocktails,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCocktails: () => dispatch(fetchCocktails()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CocktailsContainer);
