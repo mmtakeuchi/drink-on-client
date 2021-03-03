@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const BASE_URL = "http://localhost:3001";
 
 const validateUser = (userObj) => {
@@ -7,81 +9,59 @@ const validateUser = (userObj) => {
   };
 };
 
-export const createUser = (userInfo) => {
+const logUserOut = () => ({ type: "LOGOUT_USER" });
+
+export const loginUser = (user) => {
   return (dispatch) => {
-    fetch(`${BASE_URL}/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      withCreditials: true,
-      body: JSON.stringify(userInfo),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data);
-        localStorage.setItem("token", data.jwt);
-        dispatch(validateUser(data.user));
+    axios
+      .post(`${BASE_URL}/login`, { user }, { withCredentials: true })
+      .then((response) => {
+        if (response.data.logged_in) {
+          return dispatch(validateUser(response.data));
+        } else {
+          return dispatch(logUserOut());
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((error) => console.log("api errors:", error));
   };
 };
 
-export const loginUser = (userInfo) => {
+export const createUser = (user) => {
   return (dispatch) => {
-    const token = localStorage.token;
-    if (token) {
-      return fetch(`${BASE_URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(userInfo),
+    axios
+      .post(`${BASE_URL}/users`, user, { withCredentials: true })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          return dispatch(validateUser(response.data.user));
+        } else {
+          return dispatch(logUserOut());
+        }
       })
-        .then((resp) => resp.json())
-        .then((data) => {
-          console.log(data);
-          localStorage.setItem("token", data.jwt);
-          dispatch(validateUser(data.user));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+      .catch((error) => console.log("api errors:", error));
   };
 };
 
-export const autoLoginUser = () => {
+export const loginStatus = () => {
   return (dispatch) => {
-    const token = localStorage.token;
-    if (token) {
-      return fetch(`${BASE_URL}/auto_login`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+    axios
+      .get(`${BASE_URL}/logged_in`, { withCredentials: true })
+      .then((response) => {
+        console.log(response);
+        if (response.data.logged_in) {
+          return dispatch(validateUser(response.data.user));
+        } else {
+          return dispatch(logUserOut());
+        }
       })
-        .then((resp) => resp.json())
-        .then((data) => {
-          if (data.error) {
-            alert(data.error);
-            localStorage.removeItem("token");
-          } else {
-            dispatch(loginUser(data));
-          }
-        });
-    }
+      .catch((error) => console.log("api errors:", error));
   };
 };
 
-export const logoutUser = (userInfo) => {
+export const logoutUser = () => {
   return (dispatch) => {
     localStorage.removeItem("token");
-    return dispatch({ type: "LOGOUT_USER", payload: userInfo });
+    localStorage.clear();
+    return dispatch(logUserOut);
   };
 };

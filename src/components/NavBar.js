@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/userActions.js";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavBar = (props) => {
+  console.log(props);
+
   const classes = useStyles();
 
   return (
@@ -51,34 +53,19 @@ const NavBar = (props) => {
               Drink On
             </NavLink>
           </Typography>
-          {!props.user ? (
-            <>
-              <NavLink to="/signup" className={classes.link}>
-                Sign Up
-              </NavLink>
-              <NavLink to="/login" className={classes.link}>
-                Login
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <Button onClick={props.logoutUser} className={classes.link}>
-                Logout
-              </Button>
-            </>
-          )}
+
+          <NavLink to="/signup" className={classes.link}>
+            Sign Up
+          </NavLink>
+          <NavLink to="/login" className={classes.link}>
+            Login
+          </NavLink>
+
+          <NavLink to="/">Logout</NavLink>
         </Toolbar>
       </AppBar>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  user: state.user.user,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  logoutUser: () => dispatch(logoutUser()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default NavBar;

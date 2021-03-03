@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/cocktails";
+const BASE_URL = "http://localhost:3001/cocktails";
 
 export const fetchCocktails = () => {
   return (dispatch) => {

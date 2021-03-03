@@ -24,7 +24,6 @@ class Login extends Component {
     });
   };
   render() {
-    console.log(this);
     return (
       <div>
         <form className="signForm" onSubmit={this.handleSubmit}>

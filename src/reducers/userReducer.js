@@ -1,15 +1,19 @@
-const usersReducer = (state = { user: {}, loggedIn: false }, action) => {
+const initialState = {
+  current: {},
+  loggedIn: false,
+};
+
+const userReducer = (state = { initialState }, action) => {
   switch (action.type) {
     case "LOGIN_USER":
+      console.log(action.payload);
       return {
-        ...state,
-        user: action.payload,
+        current: { ...action.payload },
         loggedIn: true,
       };
     case "LOGOUT_USER":
       return {
-        ...state,
-        user: {},
+        current: {},
         loggedIn: false,
       };
     default:
@@ -17,4 +21,4 @@ const usersReducer = (state = { user: {}, loggedIn: false }, action) => {
   }
 };
 
-export default usersReducer;
+export default userReducer;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { autoLoginUser } from "./actions/userActions";
+import { loginStatus } from "./actions/userActions";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
@@ -12,7 +12,7 @@ import Container from "@material-ui/core/Container";
 
 class App extends Component {
   componentDidMount() {
-    this.props.autoLoginUser();
+    this.props.loginStatus();
   }
 
   render() {
@@ -24,6 +24,7 @@ class App extends Component {
           <div className="App">
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/" render={(props) => <Home {...props} />} />
               <Route path="/signup" render={(props) => <SignUp {...props} />} />
               <Route path="/login" render={(props) => <Login {...props} />} />
               {/* <Route path="/cocktails" component={CocktailsContainer} /> */}
@@ -40,13 +41,13 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  user: user.user,
-  loggedIn: user.loggedIn,
+const mapStateToProps = (state) => ({
+  user: state.user,
+  loggedIn: state.user.loggedIn,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  autoLoginUser: () => dispatch(autoLoginUser()),
+  loginStatus: () => dispatch(loginStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

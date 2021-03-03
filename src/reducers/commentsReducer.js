@@ -1,9 +1,7 @@
-const commentsReducer = (state = { comments: [] }, action) => {
+const commentsReducer = (state = [], action) => {
   switch (action.type) {
     case "GET_COMMENTS":
-      return {
-        comments: [...state.comments],
-      };
+      return [...state, action.payload];
     default:
       return state;
   }

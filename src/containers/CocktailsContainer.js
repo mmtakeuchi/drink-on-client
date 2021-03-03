@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import { fetchCocktails } from "../actions/cocktailActions";
+// import { autoLoginUser } from "../actions/userActions";
 import Cocktails from "../components/Cocktails";
 import NewCocktail from "../components/NewCocktail";
 
