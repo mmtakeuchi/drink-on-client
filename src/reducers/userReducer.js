@@ -12,6 +12,7 @@ const userReducer = (state = { initialState }, action) => {
         loggedIn: true,
       };
     case "LOGOUT_USER":
+      console.log("final logout");
       return {
         current: {},
         loggedIn: false,

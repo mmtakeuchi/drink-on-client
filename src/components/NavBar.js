@@ -26,10 +26,16 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
   },
 }));
-
+console.log(this);
 const NavBar = (props) => {
   console.log(props);
+  const history = useHistory();
   const classes = useStyles();
+
+  const handleClick = () => {
+    props.logoutUser();
+    history.push("/");
+  };
 
   return (
     <div className={classes.root}>
@@ -63,7 +69,7 @@ const NavBar = (props) => {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Button onClick={props.logoutUser}>Logout</Button>
+              <Button onClick={() => handleClick()}>Logout</Button>
             </React.Fragment>
           )}
         </Toolbar>
