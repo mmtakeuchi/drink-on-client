@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = (props) => {
   console.log(props);
-
   const classes = useStyles();
 
   return (
@@ -53,19 +52,32 @@ const NavBar = (props) => {
               Drink On
             </NavLink>
           </Typography>
-
-          <NavLink to="/signup" className={classes.link}>
-            Sign Up
-          </NavLink>
-          <NavLink to="/login" className={classes.link}>
-            Login
-          </NavLink>
-
-          <NavLink to="/">Logout</NavLink>
+          {!props.user.loggedIn ? (
+            <React.Fragment>
+              <NavLink to="/signup" className={classes.link}>
+                Sign Up
+              </NavLink>
+              <NavLink to="/login" className={classes.link}>
+                Login
+              </NavLink>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Button onClick={props.logoutUser}>Logout</Button>
+            </React.Fragment>
+          )}
         </Toolbar>
       </AppBar>
     </div>
   );
 };
 
-export default NavBar;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logoutUser: () => dispatch(logoutUser()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

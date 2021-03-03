@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
+import { CssBaseline } from "@material-ui/core";
 import { loginStatus } from "./actions/userActions";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
@@ -19,6 +20,7 @@ class App extends Component {
     console.log(this);
     return (
       <BrowserRouter>
+        <CssBaseline />
         <Container maxWidth="xl">
           <NavBar />
           <div className="App">

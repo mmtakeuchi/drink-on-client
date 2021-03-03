@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers/rootReducer";
 import "./index.css";
 import App from "./App";
+import { CssBaseline } from "@material-ui/core";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -17,6 +18,7 @@ const store = createStore(rootReducer, enhancer);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <CssBaseline />
       <App />
     </Provider>
   </React.StrictMode>,

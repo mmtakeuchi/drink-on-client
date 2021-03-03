@@ -60,8 +60,6 @@ export const loginStatus = () => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    localStorage.removeItem("token");
-    localStorage.clear();
-    return dispatch(logUserOut);
+    return dispatch(logUserOut());
   };
 };
