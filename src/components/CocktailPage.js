@@ -15,7 +15,7 @@ class CocktailPage extends Component {
         const cocktail = cocktails.find(
           (cocktail) => cocktail.id === parseInt(match.params.id, 10)
         );
-        console.log(cocktail);
+
         if (cocktail) {
           return (
             <>

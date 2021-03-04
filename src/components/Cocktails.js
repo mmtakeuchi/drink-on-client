@@ -20,20 +20,18 @@ export class Cocktails extends Component {
 
     const renderCocktails = () => {
       console.log(cocktails);
-      if (cocktails && cocktails.length) {
-        return (
-          <Link to={`/cocktails/${cocktails[0].id}`}>
-            <Cocktail key={cocktails[0].id} cocktail={cocktails[0]} />
-          </Link>
-        );
+      if (cocktails) {
+        return cocktails.map((cocktail, i) => {
+          return <Cocktail cocktail={cocktail} key={i} />;
+        });
       }
     };
-    console.log(this.props);
+
     return (
-      <div>
+      <div className="cocktail-list">
         <h2>Cocktails List</h2>
         <br />
-        <>{renderCocktails()}</>
+        <React.Fragment>{renderCocktails()}</React.Fragment>
         <br />
         <React.Fragment>{renderNewButton()}</React.Fragment>
       </div>

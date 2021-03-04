@@ -8,9 +8,9 @@ import CocktailPage from "../components/CocktailPage";
 
 export class CocktailsContainer extends Component {
   render() {
-    console.log(this.props.cocktails);
+    // console.log(this.props.cocktails);
     return (
-      <div>
+      <React.Fragment>
         <Switch>
           <Route exact path="/cocktails/new" component={NewCocktail} />
           <Route exact path="/cocktails" component={Cocktails} />
@@ -21,7 +21,7 @@ export class CocktailsContainer extends Component {
             )}
           />
         </Switch>
-      </div>
+      </React.Fragment>
     );
   }
 }
