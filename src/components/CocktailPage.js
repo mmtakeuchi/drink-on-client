@@ -1,24 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getCocktail } from "../actions/cocktailActions";
+import { Redirect } from "react-router-dom";
+// import { getCocktail } from "../actions/cocktailActions";
 
 class CocktailPage extends Component {
-  componentDidMount() {
-    this.props.getCocktail(this.props.match.params.id);
-  }
-
   render() {
-    const { cocktail } = this.props;
+    if (!this.props.cocktails.length) {
+      return <Redirect to="/cocktails" />;
+    }
+    const { cocktails, match } = this.props;
 
     const renderDetails = () => {
-      if (cocktail) {
-        return (
-          <>
-            <h1>{cocktail.name}</h1>
-            <h1>{cocktail.ingredients}</h1>
-            <h1>{cocktail.instructions}</h1>
-          </>
+      if (cocktails && cocktails.length >= 1) {
+        const cocktail = cocktails.find(
+          (cocktail) => cocktail.id === parseInt(match.params.id, 10)
         );
+        console.log(cocktail);
+        if (cocktail) {
+          return (
+            <>
+              <h1>{cocktail.name}</h1>
+              <h1>{cocktail.ingredients}</h1>
+              <h1>{cocktail.instructions}</h1>
+            </>
+          );
+        }
       }
     };
 
@@ -32,11 +38,9 @@ class CocktailPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  cocktail: state.cocktails,
+  cocktails: state.cocktails,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getCocktail: (cocktailId) => dispatch(getCocktail(cocktailId)),
-});
+// const mapDispatchToProps = (dispatch) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(CocktailPage);
+export default connect(mapStateToProps, null)(CocktailPage);

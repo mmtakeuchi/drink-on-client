@@ -1,7 +1,7 @@
 const cocktailsReducer = (state = [], action) => {
   switch (action.type) {
     case "GET_COCKTAILS":
-      return [...state, ...action.payload];
+      return [...action.payload];
     case "CREATE_COCKTAIL":
       return [...state, action.payload];
     case "GET_COCKTAIL":

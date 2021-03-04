@@ -8,7 +8,7 @@ import CocktailPage from "../components/CocktailPage";
 
 export class CocktailsContainer extends Component {
   render() {
-    // console.log(this.props.cocktails);
+    console.log(this.props.cocktails);
     return (
       <div>
         <Switch>
@@ -16,7 +16,9 @@ export class CocktailsContainer extends Component {
           <Route exact path="/cocktails" component={Cocktails} />
           <Route
             path="/cocktails/:id"
-            render={(props) => <CocktailPage {...props} />}
+            render={(props) => (
+              <CocktailPage {...props} cocktails={this.props.cocktails} />
+            )}
           />
         </Switch>
       </div>

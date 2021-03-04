@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import Cocktail from "./CocktailPage";
+import Cocktail from "./Cocktail";
 import { getCocktails } from "../actions/cocktailActions";
 
 export class Cocktails extends Component {
@@ -22,9 +22,8 @@ export class Cocktails extends Component {
       console.log(cocktails);
       if (cocktails && cocktails.length) {
         return (
-          <Link to={`cocktails/${cocktails[0].id}`}>
-            {cocktails[0].name}
-            {/* <Cocktail key={cocktails[0].id} cocktail={cocktails[0]} /> */}
+          <Link to={`/cocktails/${cocktails[0].id}`}>
+            <Cocktail key={cocktails[0].id} cocktail={cocktails[0]} />
           </Link>
         );
       }
@@ -33,7 +32,6 @@ export class Cocktails extends Component {
     return (
       <div>
         <h2>Cocktails List</h2>
-        {/* <Link to="/cocktails/1">1 Cocktail</Link> */}
         <br />
         <>{renderCocktails()}</>
         <br />
