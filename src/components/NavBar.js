@@ -26,9 +26,8 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
   },
 }));
-console.log(this);
+
 const NavBar = (props) => {
-  console.log(props);
   const history = useHistory();
   const classes = useStyles();
 

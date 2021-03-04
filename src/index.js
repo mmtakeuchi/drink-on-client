@@ -16,12 +16,12 @@ const enhancer = composeEnhancers(applyMiddleware(thunk));
 const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <CssBaseline />
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <CssBaseline />
+    <App />
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

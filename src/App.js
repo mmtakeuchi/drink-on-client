@@ -17,7 +17,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this);
     return (
       <BrowserRouter>
         <CssBaseline />
@@ -26,14 +25,8 @@ class App extends Component {
           <div className="App">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/" render={(props) => <Home {...props} />} />
               <Route path="/signup" render={(props) => <SignUp {...props} />} />
               <Route path="/login" render={(props) => <Login {...props} />} />
-              {/* <Route path="/cocktails" component={CocktailsContainer} /> */}
-              {/* <Route
-                path="/cocktails"
-                render={(props) => <CocktailsContainer {...props} />}
-              /> */}
               <CocktailsContainer />
             </Switch>
           </div>

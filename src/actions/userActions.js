@@ -31,7 +31,6 @@ export const createUser = (user) => {
     axios
       .post(`${BASE_URL}/users`, user, { withCredentials: true })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           return dispatch(validateUser(response.data.user));
         } else {
@@ -47,7 +46,6 @@ export const loginStatus = () => {
     axios
       .get(`${BASE_URL}/logged_in`, { withCredentials: true })
       .then((response) => {
-        console.log(response);
         if (response.data.logged_in) {
           return dispatch(validateUser(response.data.user));
         } else {
