@@ -22,7 +22,8 @@ export class Cocktails extends Component {
       if (cocktails.length) {
         return (
           <Link to={`cocktails/${cocktails[0].id}`}>
-            <Cocktail key={cocktails[0].id} />
+            {cocktails[0].name}
+            {/* <Cocktail key={cocktails[0].id} cocktail={cocktails[0]} /> */}
           </Link>
         );
       }
