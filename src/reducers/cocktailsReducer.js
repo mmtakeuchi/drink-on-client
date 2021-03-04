@@ -3,8 +3,9 @@ const cocktailsReducer = (state = [], action) => {
     case "GET_COCKTAILS":
       return [...state, ...action.payload];
     case "CREATE_COCKTAIL":
-      console.log(action.payload);
       return [...state, action.payload];
+    case "GET_COCKTAIL":
+      return action.payload;
     default:
       return state;
   }

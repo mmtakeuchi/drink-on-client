@@ -4,16 +4,20 @@ import { Switch, Route } from "react-router-dom";
 import { getCocktails } from "../actions/cocktailActions";
 import Cocktails from "../components/Cocktails";
 import NewCocktail from "../components/NewCocktail";
-import Cocktail from "../components/Cocktail";
+import CocktailPage from "../components/CocktailPage";
 
 export class CocktailsContainer extends Component {
   render() {
+    // console.log(this.props.cocktails);
     return (
       <div>
         <Switch>
+          <Route exact path="/cocktails/new" component={NewCocktail} />
           <Route exact path="/cocktails" component={Cocktails} />
-          <Route path="/cocktails/new" component={NewCocktail} />
-          <Route path="/cocktails/:id" component={Cocktail} />
+          <Route
+            path="/cocktails/:id"
+            render={(props) => <CocktailPage {...props} />}
+          />
         </Switch>
       </div>
     );
@@ -21,7 +25,7 @@ export class CocktailsContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  cocktails: state.cocktails.cocktails,
+  cocktails: state.cocktails,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,7 +7,6 @@ export const getCocktails = () => {
     axios
       .get(`${BASE_URL}`)
       .then((response) => {
-        console.log(response.data);
         if (response.data) {
           return dispatch({
             type: "GET_COCKTAILS",
@@ -20,7 +19,6 @@ export const getCocktails = () => {
 };
 
 export const createCocktail = (values, userId) => {
-  console.log(values, userId);
   const cocktailObj = {
     name: values.name,
     ingredients: values.ingredients,
@@ -44,5 +42,21 @@ export const createCocktail = (values, userId) => {
         }
       })
       .catch((error) => console.log("api errors:", error));
+  };
+};
+
+export const getCocktail = (cocktailId) => {
+  return (dispatch) => {
+    axios
+      .get(`${BASE_URL}/${cocktailId}`)
+      .then((response) => {
+        if (response.data) {
+          return dispatch({
+            type: "GET_COCKTAIL",
+            payload: response.data,
+          });
+        }
+      })
+      .catch((error) => console.log("cocktials errors:", error));
   };
 };
