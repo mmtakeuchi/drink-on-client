@@ -58,7 +58,6 @@ export const loginStatus = () => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    console.log("first logout");
     return dispatch(logUserOut());
   };
 };

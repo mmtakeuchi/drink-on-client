@@ -17,10 +17,21 @@ class CocktailPage extends Component {
         );
 
         if (cocktail) {
+          const ingredients = cocktail.ingredients
+            .split(",")
+            .map((item, i) => item.trim())
+            .filter((el) => el.length);
+          console.log(ingredients);
           return (
             <>
               <h1>{cocktail.name}</h1>
-              <h1>{cocktail.ingredients}</h1>
+
+              <ul>
+                Ingredients
+                {ingredients.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
               <h1>{cocktail.instructions}</h1>
             </>
           );
