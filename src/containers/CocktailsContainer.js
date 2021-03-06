@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import { getCocktails } from "../actions/cocktailActions";
-import Cocktails from "../components/Cocktails";
-import NewCocktail from "../components/NewCocktail";
-import CocktailPage from "../components/CocktailPage";
+import Cocktails from "../components/Cocktails/Cocktails";
+import NewCocktail from "../components/Cocktails/NewCocktail";
+import CocktailPage from "../components/Cocktails/CocktailPage";
 
 export class CocktailsContainer extends Component {
   render() {

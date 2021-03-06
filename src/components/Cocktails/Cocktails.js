@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Cocktail from "./Cocktail";
-import { getCocktails } from "../actions/cocktailActions";
+import { getCocktails } from "../../actions/cocktailActions";
 
 export class Cocktails extends Component {
   componentDidMount() {

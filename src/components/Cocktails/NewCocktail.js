@@ -10,7 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import { createCocktail } from "../actions/cocktailActions";
+import { createCocktail } from "../../actions/cocktailActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {

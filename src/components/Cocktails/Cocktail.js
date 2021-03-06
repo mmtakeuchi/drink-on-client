@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../logo.svg";
+import logo from "../../logo.svg";
 import "./Cocktail.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
@@ -39,15 +38,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cocktail = ({ cocktail }) => {
-  console.log(cocktail);
+  // console.log(cocktail);
   const classes = useStyles();
-  const [like, setLike] = React.useState(false);
+  const [like, setLike] = useState(false);
 
   const handleLike = () => {
     setLike(!like);
   };
 
-  console.log(like);
   return (
     <React.Fragment>
       <Card className={classes.root}>

@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import CommentsContainer from "../../containers/CommentsContainer";
+import Button from "@material-ui/core/Button";
 // import { getCocktail } from "../actions/cocktailActions";
 
 class CocktailPage extends Component {
   render() {
-    if (!this.props.cocktails.length) {
+    console.log(this.props);
+    const { cocktails, match, user } = this.props;
+    if (!cocktails.length) {
       return <Redirect to="/cocktails" />;
     }
-    const { cocktails, match } = this.props;
 
     const renderDetails = () => {
       if (cocktails && cocktails.length >= 1) {
@@ -16,12 +19,16 @@ class CocktailPage extends Component {
           (cocktail) => cocktail.id === parseInt(match.params.id, 10)
         );
 
+        const handleDelete = (cocktailId) => {
+          console.log(cocktail.id);
+        };
+
         if (cocktail) {
           const ingredients = cocktail.ingredients
             .split(",")
             .map((item, i) => item.trim())
             .filter((el) => el.length);
-          console.log(ingredients);
+
           return (
             <>
               <h1>{cocktail.name}</h1>
@@ -33,6 +40,28 @@ class CocktailPage extends Component {
                 ))}
               </ul>
               <h1>{cocktail.instructions}</h1>
+              {user.current.id === cocktail.user_id ? (
+                <div>
+                  <Link to={`/cocktails/${cocktail.id}/edit`}>
+                    <Button variant="outlined" color="primary">
+                      Edit
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              ) : (
+                ""
+              )}
+
+              <div className="comments-box">
+                <CommentsContainer cocktail={cocktail} />
+              </div>
             </>
           );
         }
@@ -50,6 +79,7 @@ class CocktailPage extends Component {
 
 const mapStateToProps = (state) => ({
   cocktails: state.cocktails,
+  user: state.user,
 });
 
 // const mapDispatchToProps = (dispatch) => ({});
