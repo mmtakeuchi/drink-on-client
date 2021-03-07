@@ -20,24 +20,24 @@ export const getCocktails = () => {
 
 export const createCocktail = (values, userId) => {
   const cocktailObj = {
+    id: values.id,
     name: values.name,
     ingredients: values.ingredients,
     instructions: values.instructions,
     image: values.image,
     user_id: userId,
   };
-  console.log(cocktailObj);
 
-  return (dispatch) => {
+  return function (dispatch) {
     axios
       .post(`${BASE_URL}`, cocktailObj)
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log(response.data);
           return dispatch({
             type: "CREATE_COCKTAIL",
-            payload: response.data.cocktails,
+            payload: response.data,
           });
         }
       })
@@ -58,5 +58,44 @@ export const getCocktail = (cocktailId) => {
         }
       })
       .catch((error) => console.log("cocktials errors:", error));
+  };
+};
+
+export const updateCocktail = (values, userId) => {
+  const cocktailObj = {
+    id: values.id,
+    name: values.name,
+    ingredients: values.ingredients,
+    instructions: values.instructions,
+    image: values.image,
+    user_id: userId,
+  };
+
+  return (dispatch) => {
+    axios
+      .patch(`${BASE_URL}/${values.id}`, cocktailObj)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          console.log(response.data);
+          return dispatch({
+            type: "UPDATE_COCKTAIL",
+            payload: response.data,
+          });
+        }
+      })
+      .catch((error) => console.log("api errors:", error));
+  };
+};
+
+export const deleteCocktail = (cocktailId) => {
+  return (dispatch) => {
+    axios
+      .delete(`${BASE_URL}/${cocktailId}`)
+      .then((response) => {
+        console.log(response);
+        return dispatch({ type: "DELETE_COCKTAIL", payload: cocktailId });
+      })
+      .catch((error) => console.log("api errors:", error));
   };
 };

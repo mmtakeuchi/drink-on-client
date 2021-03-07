@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Redirect, useHistory, withRouter } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
@@ -11,7 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import { createCocktail } from "../../actions/cocktailActions";
+import { updateCocktail } from "../../actions/cocktailActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,16 +28,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewCocktail = (props) => {
+const EditCocktail = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const drink = props.cocktails.find(
+    (cocktail) => cocktail.id === parseInt(props.match.params.id, 10)
+  );
+
+  const correctUser = props.user.current.id === drink.user_id;
+  console.log(props);
 
   const [values, setValues] = useState({
-    id: uuidv4(),
-    name: "",
-    image: "",
-    ingredients: "",
-    instructions: "",
+    id: `${drink.id}`,
+    name: `${drink.name}`,
+    image: `${drink.image}`,
+    ingredients: `${drink.ingredients}`,
+    instructions: `${drink.instructions}`,
   });
 
   const handleInputChange = (e) => {
@@ -47,24 +52,16 @@ const NewCocktail = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values, props.user.current.id);
-    props.createCocktail(values, props.user.current.id);
-    history.push("/cocktails");
+    props.updateCocktail(values, props.user.current.id);
+    history.push(`/cocktails/${values.id}`);
   };
 
-  // console.log(props);
-
   const renderUser = () => {
-    return props.user ? (
+    return correctUser ? (
       <React.Fragment>
         <div className={classes.root}>
-          <h1>New Cocktail</h1>
-          <form
-            className={classes.form}
-            noValidate
-            onSubmit={handleSubmit}
-            autoComplete="off"
-          >
+          <h1>Update Cocktail</h1>
+          <form className={classes.form} noValidate autoComplete="off">
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormControl className={classes.inputField} error>
@@ -145,14 +142,12 @@ const NewCocktail = (props) => {
               <Grid item xs={12}>
                 <Button
                   variant="outlined"
-                  type="submit"
                   color="primary"
-                  // className={classes.button}
-                  // onClick={handleSubmit}
-                  // disabled="submitting"
+                  className={classes.button}
+                  onClick={handleSubmit}
                   startIcon={<AddCircleOutlineIcon />}
                 >
-                  Add Cocktail
+                  Update Cocktail
                 </Button>
               </Grid>
             </Grid>
@@ -160,7 +155,7 @@ const NewCocktail = (props) => {
         </div>
       </React.Fragment>
     ) : (
-      <Redirect to="/login" />
+      <Redirect to="/cocktails" />
     );
   };
   return <React.Fragment>{renderUser()}</React.Fragment>;
@@ -168,12 +163,13 @@ const NewCocktail = (props) => {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  cocktails: state.cocktails,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createCocktail: (values, userId) => dispatch(createCocktail(values, userId)),
+  updateCocktail: (values, userId) => dispatch(updateCocktail(values, userId)),
 });
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(NewCocktail)
+  connect(mapStateToProps, mapDispatchToProps)(EditCocktail)
 );

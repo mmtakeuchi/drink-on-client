@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, Link, withRouter } from "react-router-dom";
 import CommentsContainer from "../../containers/CommentsContainer";
 import Button from "@material-ui/core/Button";
-// import { getCocktail } from "../actions/cocktailActions";
+import { deleteCocktail } from "../../actions/cocktailActions";
 
 class CocktailPage extends Component {
   render() {
     console.log(this.props);
     const { cocktails, match, user } = this.props;
+
     if (!cocktails.length) {
       return <Redirect to="/cocktails" />;
     }
@@ -19,8 +20,10 @@ class CocktailPage extends Component {
           (cocktail) => cocktail.id === parseInt(match.params.id, 10)
         );
 
-        const handleDelete = (cocktailId) => {
-          console.log(cocktail.id);
+        const handleDelete = () => {
+          console.log(`${cocktail.id}`);
+          this.props.deleteCocktail(`${cocktail.id}`);
+          this.props.history.push("/cocktails");
         };
 
         if (cocktail) {
@@ -82,6 +85,10 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-// const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  deleteCocktail: (cocktailId) => dispatch(deleteCocktail(cocktailId)),
+});
 
-export default connect(mapStateToProps, null)(CocktailPage);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CocktailPage)
+);

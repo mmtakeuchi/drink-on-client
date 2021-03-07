@@ -5,10 +5,6 @@ import Cocktail from "./Cocktail";
 import { getCocktails } from "../../actions/cocktailActions";
 
 export class Cocktails extends Component {
-  componentDidMount() {
-    this.props.getCocktails();
-  }
-
   render() {
     const { cocktails } = this.props;
 
@@ -19,7 +15,7 @@ export class Cocktails extends Component {
     };
 
     const renderCocktails = () => {
-      console.log(cocktails);
+      console.log(this.props.cocktails);
       if (cocktails) {
         return cocktails.map((cocktail, i) => {
           return <Cocktail cocktail={cocktail} key={i} />;
