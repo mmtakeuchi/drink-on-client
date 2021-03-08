@@ -8,7 +8,7 @@ import { deleteCocktail } from "../../actions/cocktailActions";
 class CocktailPage extends Component {
   render() {
     console.log(this.props);
-    const { cocktails, match, user } = this.props;
+    const { cocktails, match, user, history } = this.props;
 
     if (!cocktails.length) {
       return <Redirect to="/cocktails" />;
@@ -23,7 +23,11 @@ class CocktailPage extends Component {
         const handleDelete = () => {
           console.log(`${cocktail.id}`);
           this.props.deleteCocktail(`${cocktail.id}`);
-          this.props.history.push("/cocktails");
+          history.push("/cocktails");
+        };
+
+        const handleBack = () => {
+          history.push("/cocktails");
         };
 
         if (cocktail) {
@@ -34,6 +38,9 @@ class CocktailPage extends Component {
 
           return (
             <>
+              <Button variant="outlined" onClick={handleBack}>
+                Back to Cocktails
+              </Button>
               <h1>{cocktail.name}</h1>
 
               <ul>

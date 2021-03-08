@@ -1,7 +1,7 @@
 const cocktailsReducer = (state = [], action) => {
   switch (action.type) {
     case "GET_COCKTAILS":
-      return [...action.payload];
+      return action.payload;
     case "CREATE_COCKTAIL":
       console.log(state);
       console.log(action.payload);
@@ -9,9 +9,6 @@ const cocktailsReducer = (state = [], action) => {
     case "GET_COCKTAIL":
       return action.payload;
     case "UPDATE_COCKTAIL":
-      console.log(action.payload);
-      let dd = action.payload.id;
-      console.log(typeof dd);
       let otherDrinks = state.filter((drink) => drink.id !== action.payload.id);
       console.log(otherDrinks);
       return [...otherDrinks, action.payload];

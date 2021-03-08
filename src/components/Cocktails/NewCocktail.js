@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Redirect, useHistory, withRouter } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
@@ -34,7 +33,6 @@ const NewCocktail = (props) => {
   const history = useHistory();
 
   const [values, setValues] = useState({
-    id: uuidv4(),
     name: "",
     image: "",
     ingredients: "",

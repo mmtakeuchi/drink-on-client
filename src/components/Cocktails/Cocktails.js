@@ -1,39 +1,61 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Cocktail from "./Cocktail";
 import { getCocktails } from "../../actions/cocktailActions";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
-export class Cocktails extends Component {
-  render() {
-    const { cocktails } = this.props;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+}));
 
-    const renderNewButton = () => {
-      if (this.props.user.loggedIn) {
-        return <Link to="/cocktails/new">New Cocktail</Link>;
-      }
-    };
+const Cocktails = (props) => {
+  console.log(props);
+  const { cocktails } = props;
+  const classes = useStyles();
 
-    const renderCocktails = () => {
-      console.log(this.props.cocktails);
-      if (cocktails) {
-        return cocktails.map((cocktail, i) => {
-          return <Cocktail cocktail={cocktail} key={i} />;
-        });
-      }
-    };
+  const renderNewButton = () => {
+    if (props.user.loggedIn) {
+      return (
+        <Link to="/cocktails/new">
+          <Button color="primary">New Cocktail</Button>
+        </Link>
+      );
+    }
+  };
 
-    return (
-      <div className="cocktail-list">
-        <h2>Cocktails List</h2>
-        <br />
+  const renderCocktails = () => {
+    if (cocktails) {
+      return cocktails.map((cocktail, i) => {
+        return (
+          <Grid item xs={6} sm={4} md={3} lg={2}>
+            <Cocktail cocktail={cocktail} key={i} />
+          </Grid>
+        );
+      });
+    }
+  };
+
+  return (
+    <div className={classes.root}>
+      <h2>Cocktails List</h2>
+      <React.Fragment>{renderNewButton()}</React.Fragment>
+      <br />
+      <Grid container spacing={3}>
         <React.Fragment>{renderCocktails()}</React.Fragment>
-        <br />
-        <React.Fragment>{renderNewButton()}</React.Fragment>
-      </div>
-    );
-  }
-}
+      </Grid>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   user: state.user,

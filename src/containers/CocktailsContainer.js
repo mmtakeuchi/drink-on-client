@@ -7,7 +7,7 @@ import NewCocktail from "../components/Cocktails/NewCocktail";
 import EditCocktail from "../components/Cocktails/EditCocktail";
 import CocktailPage from "../components/Cocktails/CocktailPage";
 
-export class CocktailsContainer extends Component {
+class CocktailsContainer extends Component {
   componentDidMount() {
     this.props.getCocktails();
   }
@@ -25,7 +25,14 @@ export class CocktailsContainer extends Component {
               <CocktailPage {...props} cocktails={this.props.cocktails} />
             )}
           />
-          <Route exact path="/cocktails" component={Cocktails} />
+          {/* <Route exact path="/cocktails" component={Cocktails} /> */}
+          <Route
+            exact
+            path="/cocktails"
+            render={(props) => (
+              <Cocktails {...props} cocktails={this.props.cocktails} />
+            )}
+          />
         </Switch>
       </React.Fragment>
     );
