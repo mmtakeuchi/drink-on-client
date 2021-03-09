@@ -10,11 +10,19 @@ class CommentsContainer extends Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
-        {this.props.user.loggedIn ? <CommentForm /> : ""}
-        <Comments user={this.props.user} cocktail={this.props.cocktail} />
+        {this.props.user.loggedIn ? (
+          <CommentForm cocktail={this.props.cocktail} user={this.props.user} />
+        ) : (
+          ""
+        )}
+        <Comments
+          user={this.props.user}
+          cocktail={this.props.cocktail}
+          comments={this.props.comments}
+        />
       </div>
     );
   }
@@ -22,6 +30,7 @@ class CommentsContainer extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  comments: state.comments,
 });
 
 const mapDispatchToProps = (dispatch) => ({

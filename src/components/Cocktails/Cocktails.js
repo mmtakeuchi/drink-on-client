@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cocktails = (props) => {
-  console.log(props);
+  // console.log(props);
   const { cocktails } = props;
   const classes = useStyles();
 
@@ -37,7 +37,7 @@ const Cocktails = (props) => {
     if (cocktails) {
       return cocktails.map((cocktail, i) => {
         return (
-          <Grid item xs={6} sm={4} md={3} lg={2}>
+          <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
             <Cocktail cocktail={cocktail} key={i} />
           </Grid>
         );

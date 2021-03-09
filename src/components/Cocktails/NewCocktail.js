@@ -45,7 +45,6 @@ const NewCocktail = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values, props.user.current.id);
     props.createCocktail(values, props.user.current.id);
     history.push("/cocktails");
   };
@@ -146,8 +145,6 @@ const NewCocktail = (props) => {
                   type="submit"
                   color="primary"
                   // className={classes.button}
-                  // onClick={handleSubmit}
-                  // disabled="submitting"
                   startIcon={<AddCircleOutlineIcon />}
                 >
                   Add Cocktail

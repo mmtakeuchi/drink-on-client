@@ -7,7 +7,7 @@ import { deleteCocktail } from "../../actions/cocktailActions";
 
 class CocktailPage extends Component {
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { cocktails, match, user, history } = this.props;
 
     if (!cocktails.length) {
