@@ -7,6 +7,11 @@ const commentsReducer = (state = [], action) => {
     case "CREATE_COMMENT":
       // console.log(action.payload);
       return [...state, action.payload];
+    case "DELETE_COMMENT":
+      let filteredComments = state.filter(
+        (comment) => comment.id !== parseInt(action.payload)
+      );
+      return filteredComments;
     default:
       return state;
   }

@@ -52,7 +52,10 @@ class CocktailPage extends Component {
               <h1>{cocktail.instructions}</h1>
               {user.current.id === cocktail.user_id ? (
                 <div>
-                  <Link to={`/cocktails/${cocktail.id}/edit`}>
+                  <Link
+                    to={`/cocktails/${cocktail.id}/edit`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <Button variant="outlined" color="primary">
                       Edit
                     </Button>

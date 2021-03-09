@@ -16,7 +16,6 @@ const cocktailsReducer = (state = [], action) => {
       let filteredDrinks = state.filter(
         (drink) => drink.id !== parseInt(action.payload)
       );
-
       return filteredDrinks;
     default:
       return state;
