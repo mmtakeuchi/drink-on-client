@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.user);
+    // console.log(this.props.user);
     return (
       <BrowserRouter>
         <CssBaseline />
@@ -26,7 +26,10 @@ class App extends Component {
           <div className="App">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/signup" render={(props) => <SignUp {...props} />} />
+              <Route
+                path="/signup"
+                render={(props) => <SignUp {...props} user={this.props.user} />}
+              />
               <Route path="/login" render={(props) => <Login {...props} />} />
               <Route path="/cocktails" component={CocktailsContainer} />
             </Switch>
