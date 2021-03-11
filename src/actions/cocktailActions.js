@@ -1,10 +1,15 @@
 import axios from "axios";
-import API_ROOT from "../apiRoot";
+let BASE_URL;
+if (process.env.NODE_ENV === "production") {
+  BASE_URL = "https://drink-on-api.herokuapp.com/cocktails";
+} else {
+  BASE_URL = "http://localhost:3000/cocktails";
+}
 
 export const getCocktails = () => {
   return (dispatch) => {
     axios
-      .get(`${API_ROOT}`)
+      .get(`${BASE_URL}`)
       .then((response) => {
         if (response.data) {
           return dispatch({
@@ -29,7 +34,7 @@ export const createCocktail = (values, user) => {
 
   return function (dispatch) {
     axios
-      .post(`${API_ROOT}`, cocktailObj)
+      .post(`${BASE_URL}`, cocktailObj)
       .then((response) => {
         console.log(response);
         if (response.status === 201) {
@@ -56,7 +61,7 @@ export const updateCocktail = (values, userId) => {
 
   return (dispatch) => {
     axios
-      .patch(`${API_ROOT}/${values.id}`, cocktailObj)
+      .patch(`${BASE_URL}/${values.id}`, cocktailObj)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
@@ -74,7 +79,7 @@ export const updateCocktail = (values, userId) => {
 export const deleteCocktail = (cocktailId) => {
   return (dispatch) => {
     axios
-      .delete(`${API_ROOT}/${cocktailId}`)
+      .delete(`${BASE_URL}/${cocktailId}`)
       .then((response) => {
         console.log(response);
         return dispatch({ type: "DELETE_COCKTAIL", payload: cocktailId });

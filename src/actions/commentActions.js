@@ -1,10 +1,15 @@
 import axios from "axios";
-import API_ROOT from "../apiRoot";
+let BASE_URL;
+if (process.env.NODE_ENV === "production") {
+  BASE_URL = "https://drink-on-api.herokuapp.com/cocktails";
+} else {
+  BASE_URL = "http://localhost:3000/cocktails";
+}
 
 export const getComments = (cocktailId) => {
   return (dispatch) => {
     axios
-      .get(`${API_ROOT}/${cocktailId}/comments`)
+      .get(`${BASE_URL}/${cocktailId}/comments`)
       .then((response) => {
         if (response.data) {
           return dispatch({
@@ -26,7 +31,7 @@ export const createComment = (cocktailId, comment, userId) => {
 
   return (dispatch) => {
     axios
-      .post(`${API_ROOT}/${cocktailId}/comments`, commentObj)
+      .post(`${BASE_URL}/${cocktailId}/comments`, commentObj)
       .then((response) => {
         console.log(response);
         if (response.data) {
@@ -50,7 +55,7 @@ export const updateComment = (cocktailId, comment, userId) => {
 
   return (dispatch) => {
     axios
-      .patch(`${API_ROOT}/${cocktailId}/comments/${comment.id}`, commentObj)
+      .patch(`${BASE_URL}/${cocktailId}/comments/${comment.id}`, commentObj)
       .then((response) => {
         console.log(response);
         if (response.data) {
@@ -68,7 +73,7 @@ export const deleteComment = (cocktailId, commentId) => {
   console.log(commentId, cocktailId);
   return (dispatch) => {
     axios
-      .delete(`${API_ROOT}/${cocktailId}/comments/${commentId}`)
+      .delete(`${BASE_URL}/${cocktailId}/comments/${commentId}`)
       .then((response) => {
         console.log(response);
         return dispatch({ type: "DELETE_COMMENT", payload: commentId });
