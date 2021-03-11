@@ -1,11 +1,10 @@
 import axios from "axios";
-
-const BASE_URL = "http://localhost:3001/cocktails";
+import API_ROOT from "../apiRoot";
 
 export const getCocktails = () => {
   return (dispatch) => {
     axios
-      .get(`${BASE_URL}`)
+      .get(`${API_ROOT}`)
       .then((response) => {
         if (response.data) {
           return dispatch({
@@ -30,7 +29,7 @@ export const createCocktail = (values, user) => {
 
   return function (dispatch) {
     axios
-      .post(`${BASE_URL}`, cocktailObj)
+      .post(`${API_ROOT}`, cocktailObj)
       .then((response) => {
         console.log(response);
         if (response.status === 201) {
@@ -57,7 +56,7 @@ export const updateCocktail = (values, userId) => {
 
   return (dispatch) => {
     axios
-      .patch(`${BASE_URL}/${values.id}`, cocktailObj)
+      .patch(`${API_ROOT}/${values.id}`, cocktailObj)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
@@ -75,7 +74,7 @@ export const updateCocktail = (values, userId) => {
 export const deleteCocktail = (cocktailId) => {
   return (dispatch) => {
     axios
-      .delete(`${BASE_URL}/${cocktailId}`)
+      .delete(`${API_ROOT}/${cocktailId}`)
       .then((response) => {
         console.log(response);
         return dispatch({ type: "DELETE_COCKTAIL", payload: cocktailId });

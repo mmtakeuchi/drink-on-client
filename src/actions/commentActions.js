@@ -1,11 +1,10 @@
 import axios from "axios";
-
-const BASE_URL = "http://localhost:3001/cocktails";
+import API_ROOT from "../apiRoot";
 
 export const getComments = (cocktailId) => {
   return (dispatch) => {
     axios
-      .get(`${BASE_URL}/${cocktailId}/comments`)
+      .get(`${API_ROOT}/${cocktailId}/comments`)
       .then((response) => {
         if (response.data) {
           return dispatch({
@@ -27,7 +26,7 @@ export const createComment = (cocktailId, comment, userId) => {
 
   return (dispatch) => {
     axios
-      .post(`${BASE_URL}/${cocktailId}/comments`, commentObj)
+      .post(`${API_ROOT}/${cocktailId}/comments`, commentObj)
       .then((response) => {
         console.log(response);
         if (response.data) {
@@ -51,7 +50,7 @@ export const updateComment = (cocktailId, comment, userId) => {
 
   return (dispatch) => {
     axios
-      .patch(`${BASE_URL}/${cocktailId}/comments/${comment.id}`, commentObj)
+      .patch(`${API_ROOT}/${cocktailId}/comments/${comment.id}`, commentObj)
       .then((response) => {
         console.log(response);
         if (response.data) {
@@ -69,7 +68,7 @@ export const deleteComment = (cocktailId, commentId) => {
   console.log(commentId, cocktailId);
   return (dispatch) => {
     axios
-      .delete(`${BASE_URL}/${cocktailId}/comments/${commentId}`)
+      .delete(`${API_ROOT}/${cocktailId}/comments/${commentId}`)
       .then((response) => {
         console.log(response);
         return dispatch({ type: "DELETE_COMMENT", payload: commentId });

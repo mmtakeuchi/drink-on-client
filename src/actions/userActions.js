@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const BASE_URL = "http://localhost:3001";
+import API_ROOT from "../apiRoot";
 
 const validateUser = (userObj) => {
   return {
@@ -21,7 +20,7 @@ const logUserOut = () => ({ type: "LOGOUT_USER" });
 export const loginUser = (user) => {
   return (dispatch) => {
     axios
-      .post(`${BASE_URL}/login`, { user }, { withCredentials: true })
+      .post(`${API_ROOT}/login`, { user }, { withCredentials: true })
       .then((response) => {
         if (response.status === 200 && !response.data.errors) {
           return dispatch(validateUser(response.data));
@@ -36,7 +35,7 @@ export const loginUser = (user) => {
 export const createUser = (user) => {
   return (dispatch) => {
     axios
-      .post(`${BASE_URL}/users`, user, { withCredentials: true })
+      .post(`${API_ROOT}/users`, user, { withCredentials: true })
       .then((response) => {
         console.log(response);
         if (response.data.status === "created") {
@@ -58,7 +57,7 @@ export const createUser = (user) => {
 export const loginStatus = () => {
   return (dispatch) => {
     axios
-      .get(`${BASE_URL}/logged_in`, { withCredentials: true })
+      .get(`${API_ROOT}/logged_in`, { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
           return dispatch(validateUser(response.data.user));
