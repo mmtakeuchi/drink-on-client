@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useHistory, withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { createUser } from "../actions/userActions";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -79,7 +79,7 @@ const SignUp = (props) => {
         password: "",
       });
 
-      props.history.push("/");
+      history.push("/");
     }
   };
 
@@ -106,15 +106,6 @@ const SignUp = (props) => {
     <div className={classes.root}>
       <h2>Sign Up Form</h2>
 
-      {/* {values.errors && (
-        <>
-          {values.errors.map((error, i) => (
-            <p key={i} className="errorText">
-              {error}
-            </p>
-          ))}
-        </>
-      )} */}
       {values.usernameErrors ? handleErrors() : null}
       <form
         onSubmit={handleSubmit}
@@ -131,7 +122,7 @@ const SignUp = (props) => {
               {/* <InputLabel htmlFor="username">Username</InputLabel> */}
               {/* <label htmlFor="username">Username</label> */}
               <TextField
-                label="username"
+                label="Username"
                 error={values.usernameError ? true : null}
                 name="username"
                 aria-describedby="my-helper-text"

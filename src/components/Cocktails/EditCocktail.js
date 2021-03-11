@@ -43,7 +43,6 @@ const EditCocktail = (props) => {
     name: `${drink.name}`,
     image: `${drink.image}`,
     ingredients: `${drink.ingredients}`,
-    instructions: `${drink.instructions}`,
   });
 
   const handleInputChange = (e) => {
@@ -99,30 +98,7 @@ const EditCocktail = (props) => {
                   </FormHelperText>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
-                <FormControl
-                  error
-                  className={classes.inputField}
-                  variant="outlined"
-                >
-                  <InputLabel htmlFor="component-error">
-                    Instructions
-                  </InputLabel>
-                  <OutlinedInput
-                    multiline
-                    rows={5}
-                    label="Instructions"
-                    id="component-error"
-                    name="instructions"
-                    value={values.instructions}
-                    onChange={handleInputChange}
-                    aria-describedby="component-error-text"
-                  />
-                  <FormHelperText id="component-error-text">
-                    Please seperate instructions by a comma.
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
+
               <Grid item xs={12}>
                 <input
                   accept="image/*"

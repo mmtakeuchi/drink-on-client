@@ -53,7 +53,7 @@ const Cocktail = ({ cocktail }) => {
           <CardHeader title={cocktail.name} />
           <CardMedia
             className={classes.media}
-            image={logo}
+            image={cocktail.image ? cocktail.image : logo}
             title="Paella dish"
           />
         </Link>

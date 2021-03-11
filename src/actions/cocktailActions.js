@@ -18,14 +18,14 @@ export const getCocktails = () => {
   };
 };
 
-export const createCocktail = (values, userId) => {
+export const createCocktail = (values, user) => {
   const cocktailObj = {
     id: values.id,
     name: values.name,
     ingredients: values.ingredients,
     instructions: values.instructions,
     image: values.image,
-    user_id: userId,
+    user_id: user.id,
   };
 
   return function (dispatch) {
@@ -37,7 +37,7 @@ export const createCocktail = (values, userId) => {
           console.log(response.data);
           return dispatch({
             type: "CREATE_COCKTAIL",
-            payload: response.data,
+            payload: [response.data, user.username],
           });
         }
       })

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Redirect, useHistory, withRouter } from "react-router-dom";
+import { CloudinaryContext } from "cloudinary-react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
@@ -34,9 +35,10 @@ const NewCocktail = (props) => {
 
   const [values, setValues] = useState({
     name: "",
-    image: "",
     ingredients: "",
-    instructions: "",
+    image: "",
+    nameErrors: "",
+    ingredientError: "",
   });
 
   const handleInputChange = (e) => {
@@ -45,17 +47,67 @@ const NewCocktail = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.createCocktail(values, props.user.current.id);
-    history.push("/cocktails");
+    if (validateInputs()) {
+      props.createCocktail(values, props.user.current);
+      history.push("/cocktails");
+    }
   };
 
-  // console.log(props);
+  const validateInputs = () => {
+    let isValid = true;
+    let name = values.name;
+    let ingredients = values.ingredients;
+    let nameError = "";
+    let ingredientsError = "";
+
+    if (!values.name) {
+      nameError = "Invalid name";
+    }
+
+    if (!values.ingredients) {
+      ingredientsError = "Ingredients can't be empty.";
+    }
+
+    if (nameError || ingredientsError) {
+      setValues({ name, ingredients, nameError, ingredientsError });
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
+  const imageSubmit = () => {
+    var myUploadWidget;
+    myUploadWidget = window.cloudinary.openUploadWidget(
+      {
+        cloudName: "disiodpgq",
+        uploadPreset: "ij6ulbcy",
+      },
+      (error, result) => {
+        console.log(result);
+        if (result.info.secure_url) {
+          setValues({
+            image: result.info.secure_url,
+          });
+        }
+      }
+    );
+  };
 
   const renderUser = () => {
-    return props.user ? (
+    return props.user.loggedIn ? (
       <React.Fragment>
         <div className={classes.root}>
           <h1>New Cocktail</h1>
+          <CloudinaryContext cloudName="disiodpgq">
+            <button
+              id="upload_widget"
+              onClick={imageSubmit}
+              className="cloudinary-button"
+            >
+              Upload files
+            </button>
+          </CloudinaryContext>
           <form
             className={classes.form}
             noValidate
@@ -64,22 +116,26 @@ const NewCocktail = (props) => {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FormControl className={classes.inputField} error>
+                <FormControl
+                  className={classes.inputField}
+                  error={values.nameError ? true : null}
+                >
                   <InputLabel htmlFor="name">Name</InputLabel>
                   <Input
+                    error={values.nameError ? true : null}
                     name="name"
                     aria-describedby="my-helper-text"
                     value={values.name}
                     onChange={handleInputChange}
                   />
                   <FormHelperText id="my-helper-text">
-                    We'll never share your email.
+                    {values.nameError}
                   </FormHelperText>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControl
-                  error
+                  error={values.ingredientsError ? true : null}
                   className={classes.inputField}
                   variant="outlined"
                 >
@@ -87,58 +143,23 @@ const NewCocktail = (props) => {
                   <OutlinedInput
                     multiline
                     rows={5}
+                    error={values.ingredientsError ? true : null}
                     label="Ingredients"
                     id="component-error"
                     name="ingredients"
+                    placeholder="Please seperate ingredients with a comma"
                     value={values.ingredients}
                     onChange={handleInputChange}
                     aria-describedby="component-error-text"
                   />
                   <FormHelperText id="component-error-text">
-                    Please seperate ingredients by a ","
+                    {values.ingredientsError
+                      ? values.ingredientsError
+                      : "Please seperate ingredients with a comma"}
                   </FormHelperText>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
-                <FormControl
-                  error
-                  className={classes.inputField}
-                  variant="outlined"
-                >
-                  <InputLabel htmlFor="component-error">
-                    Instructions
-                  </InputLabel>
-                  <OutlinedInput
-                    multiline
-                    rows={5}
-                    label="Instructions"
-                    id="component-error"
-                    name="instructions"
-                    value={values.instructions}
-                    onChange={handleInputChange}
-                    aria-describedby="component-error-text"
-                  />
-                  <FormHelperText id="component-error-text">
-                    Please seperate instructions by a comma.
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <input
-                  accept="image/*"
-                  name="image"
-                  // className={classes.inputField}
-                  style={{ width: "35%" }}
-                  id="contained-button-file"
-                  multiple
-                  type="file"
-                />
-                <label htmlFor="contained-button-file">
-                  <Button variant="contained" color="primary" component="span">
-                    Upload
-                  </Button>
-                </label>
-              </Grid>
+
               <Grid item xs={12}>
                 <Button
                   variant="outlined"
