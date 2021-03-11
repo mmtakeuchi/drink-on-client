@@ -16,9 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
   drinkButton: {
     textDecoration: "none",
+    marginRight: theme.spacing(1),
   },
   title: {
+    marginRight: theme.spacing(1),
+  },
+  menu: {
     flexGrow: 1,
+    marginLeft: theme.spacing(2),
   },
   link: {
     marginLeft: theme.spacing(2),
@@ -54,7 +59,12 @@ const NavBar = (props) => {
 
           <Typography variant="h6" className={classes.title}>
             <NavLink to="/cocktails" className={classes.link}>
-              Drink On
+              Drinks
+            </NavLink>
+          </Typography>
+          <Typography variant="h6" className={classes.menu}>
+            <NavLink to="/cocktails/new" className={classes.link}>
+              Add Drink
             </NavLink>
           </Typography>
           {!props.user.loggedIn ? (
